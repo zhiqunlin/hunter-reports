@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Value Hunter · A股深度估值分析报告集</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#0f1923;color:#e0e0e0}
+.container{max-width:900px;margin:0 auto;padding:40px 20px}
+.header{text-align:center;margin-bottom:40px}
+.header h1{font-size:28px;background:linear-gradient(135deg,#00b894,#0984e3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header p{color:#888;font-size:14px;margin-top:6px}
+.report-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.report{background:#1a2634;border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:transform .15s;text-decoration:none;color:inherit;display:block}
+.report:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.report .head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.report .code{font-size:12px;color:#666;margin-bottom:4px}
+.report .name{font-size:18px;font-weight:700;color:#dfe6e9;margin-bottom:8px}
+.report .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.report .meta span{background:#2d3a4a;padding:2px 8px;border-radius:4px;font-size:12px;color:#aaa}
+.report .date{font-size:11px;color:#555;margin-top:8px}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.kpi-item{background:#162231;padding:8px;border-radius:6px;text-align:center}
+.kpi-label{font-size:10px;color:#666;margin-bottom:2px}
+.kpi-value{font-size:16px;font-weight:700;color:#dfe6e9}
+.status{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.status-undervalue{background:#dcfce7;color:#166534}
+.status-fair{background:#fef3c7;color:#92400e}
+.status-overvalue{background:#fee2e2;color:#991b1b}
+.link-btn{font-size:12px;padding:4px 12px;border-radius:4px;background:#0984e3;color:#fff;text-decoration:none;display:inline-block;margin-top:8px}
+.footer{text-align:center;color:#555;font-size:12px;padding:30px;margin-top:20px}
+@media(max-width:600px){.report-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Stock Value Hunter</h1>
+<p>A股深度估值分析 · ROE/PB/PE/DCF · 产业链对标 · 利好兑现量化</p>
+</div>
+<div class="report-list">
+
+</div>
+<div class="footer"><p>Stock Value Hunter · Powered by investoday-api · ⚠️ 不构成投资建议</p></div>
+</div>
+</body>
+</html>
