@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>厦门钨业 (600549) 估值分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0f1923; color:#e0e0e0; font-family:'Microsoft YaHei',sans-serif; line-height:1.6; }
+nav { position:sticky; top:0; z-index:100; background:#1a2a3a; padding:12px 24px; display:flex; gap:20px; border-bottom:2px solid #2a4a6a; }
+nav a { color:#64b5f6; text-decoration:none; font-size:14px; }
+nav a:hover { color:#90caf9; }
+.container { max-width:1200px; margin:0 auto; padding:24px; }
+h1 { color:#ffd54f; font-size:28px; margin-bottom:8px; }
+h2 { color:#64b5f6; font-size:20px; margin:32px 0 16px; border-bottom:1px solid #2a4a6a; padding-bottom:8px; }
+.card { background:#1a2a3a; border-radius:8px; padding:20px; margin:16px 0; }
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+.metric { background:#1e3044; padding:16px; border-radius:6px; text-align:center; }
+.metric .label { color:#90a4ae; font-size:12px; }
+.metric .value { color:#ffd54f; font-size:24px; font-weight:bold; }
+.metric .sub { color:#81c784; font-size:12px; }
+table { width:100%; border-collapse:collapse; margin:12px 0; }
+th { background:#1e3044; color:#64b5f6; padding:10px; text-align:left; font-size:13px; }
+td { padding:10px; border-bottom:1px solid #1e3044; font-size:13px; }
+.warn { color:#ff8a65; }
+.danger { color:#ef5350; }
+.good { color:#81c784; }
+.chart-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+.chart-box { background:#1a2a3a; border-radius:8px; padding:16px; }
+.chart-box canvas { max-height:300px; }
+.footer { margin-top:48px; padding:24px; text-align:center; color:#546e7a; font-size:12px; border-top:1px solid #1e3044; }
+.footer a { color:#64b5f6; }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; margin:2px; }
+.tag-red { background:#c62828; color:#fff; }
+.tag-yellow { background:#f57f17; color:#fff; }
+.tag-green { background:#2e7d32; color:#fff; }
+</style>
+</head>
+<body>
+<nav>
+<a href="https://zhiqunlin.github.io/hunter-reports/">← 索引</a>
+<a href="#overview">概览</a>
+<a href="#valuation">估值</a>
+<a href="#risk">风险</a>
+<a href="./report.html">完整报告</a>
+</nav>
+
+<div class="container">
+<h1>厦门钨业 (600549)</h1>
+<p style="color:#90a4ae;margin-bottom:16px;">有色金属 · 小金属 · 钨 | 2026-06-03 | 收盘价 60.01元</p>
+
+<div id="overview" class="metrics">
+<div class="metric"><div class="label">PE(TTM)</div><div class="value">31.41x</div><div class="sub">行业最低</div></div>
+<div class="metric"><div class="label">PB</div><div class="value">5.21x</div><div class="sub">行业最低</div></div>
+<div class="metric"><div class="label">ROE(TTM)</div><div class="value">14.0%</div><div class="sub">2025FY</div></div>
+<div class="metric"><div class="label">估值中枢</div><div class="value danger">19.93元</div><div class="sub">PB框架加权</div></div>
+<div class="metric"><div class="label">安全边际</div><div class="value danger">-66.8%</div><div class="sub">显著偏高</div></div>
+<div class="metric"><div class="label">综合评分</div><div class="value" style="color:#ffd54f">17/30</div><div class="sub">⭐⭐⭐ 中性</div></div>
+</div>
+
+<div class="card">
+<h2 id="valuation">多情景估值 (周期股PB框架)</h2>
+<table>
+<tr><th>情景</th><th>PB(x)</th><th>估值价(元)</th><th>权重</th></tr>
+<tr><td>极度乐观</td><td>2.88</td><td>35.22</td><td>3%</td></tr>
+<tr><td>乐观</td><td>2.16</td><td>26.41</td><td>7%</td></tr>
+<tr><td>中性</td><td>2.40</td><td>29.35</td><td>25%</td></tr>
+<tr><td>保守</td><td>1.44</td><td>17.61</td><td>35%</td></tr>
+<tr><td>悲观</td><td>0.96</td><td>11.74</td><td>30%</td></tr>
+<tr style="font-weight:bold;background:#1e3044;"><td>加权期望</td><td>—</td><td style="color:#ef5350">19.93</td><td>100%</td></tr>
+</table>
+</div>
+
+<div class="chart-row">
+<div class="chart-box"><canvas id="chartScenarios"></canvas></div>
+<div class="chart-box"><canvas id="chartRisk"></canvas></div>
+</div>
+
+<div class="card">
+<h2 id="risk">反方风险矩阵</h2>
+<table>
+<tr><th>风险类别</th><th>严重程度</th><th>概率</th><th>风险得分</th></tr>
+<tr><td>需求坍塌</td><td><span class="tag tag-yellow">CAUTION</span></td><td>30%</td><td>0.6</td></tr>
+<tr><td>成本侵蚀</td><td><span class="tag tag-green">OK</span></td><td>10%</td><td>0.1</td></tr>
+<tr><td>替代品/技术颠覆</td><td><span class="tag tag-green">OK</span></td><td>5%</td><td>0.05</td></tr>
+<tr><td>政策逆风</td><td><span class="tag tag-yellow">CAUTION</span></td><td>40%</td><td>0.8</td></tr>
+<tr><td>资金面异常</td><td><span class="tag tag-green">OK</span></td><td>5%</td><td>0.05</td></tr>
+<tr style="font-weight:bold;"><td>综合风险分</td><td colspan="3">1.6/15 — 风险可控</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>周期阶段判定</h2>
+<table>
+<tr><th>指标</th><th>数值</th><th>判定</th></tr>
+<tr><td>当前ROE(年化)</td><td>25.0%</td><td>Q1年化</td></tr>
+<tr><td>历史ROE均值</td><td>14.0%</td><td>2025FY</td></tr>
+<tr><td>ROE标准差</td><td>4.4%</td><td>—</td></tr>
+<tr><td style="font-weight:bold;color:#ef5350">周期阶段</td><td colspan="2" style="color:#ef5350">顶峰(过热) · 阶段系数0.8</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>操作建议</h2>
+<table>
+<tr><th>持仓状态</th><th>建议</th></tr>
+<tr><td>未持有</td><td>🔴 观望 — 周期顶峰不宜追高</td></tr>
+<tr><td>已持有</td><td>🟡 持有 — 享受钨价高位红利，关注Q2业绩</td></tr>
+<tr><td>重仓</td><td>🔴 逢高减仓 — 周期顶峰逐步降低仓位</td></tr>
+</table>
+</div>
+
+<div class="footer">
+<p>本报告基于公开数据和量化模型生成，仅供参考，不构成任何投资建议。</p>
+<p><a href="./厦门钨业_hunter.md">Markdown 原文</a> · <a href="./report.html">完整报告查看器</a> · <a href="https://github.com/zhiqunlin/hunter-reports">GitHub 仓库</a></p>
+</div>
+</div>
+
+<script>
+// 情景概率分布图
+new Chart(document.getElementById('chartScenarios'), {
+  type: 'bar',
+  data: {
+    labels: ['极度乐观', '乐观', '中性', '保守', '悲观'],
+    datasets: [{
+      label: '估值价(元)',
+      data: [35.22, 26.41, 29.35, 17.61, 11.74],
+      backgroundColor: ['#4caf50','#8bc34a','#ffc107','#ff9800','#f44336'],
+      borderColor: '#1a2a3a',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: '#90a4ae' } },
+      title: { display: true, text: '五情景估值分布', color: '#64b5f6' },
+      annotation: {
+        annotations: {
+          line1: { type: 'line', yMin: 60.01, yMax: 60.01, borderColor: '#ef5350', borderWidth: 2, label: { content: '当前价60.01', display: true } }
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { color: '#90a4ae' }, grid: { color: '#1e3044' } },
+      y: { ticks: { color: '#90a4ae' }, grid: { color: '#1e3044' } }
+    }
+  }
+});
+
+// 风险雷达图
+new Chart(document.getElementById('chartRisk'), {
+  type: 'radar',
+  data: {
+    labels: ['需求坍塌', '成本侵蚀', '替代品', '政策逆风', '资金异常'],
+    datasets: [{
+      label: '风险得分',
+      data: [0.6, 0.1, 0.05, 0.8, 0.05],
+      backgroundColor: 'rgba(239,83,80,0.2)',
+      borderColor: '#ef5350',
+      borderWidth: 2,
+      pointBackgroundColor: '#ef5350'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: '#90a4ae' } },
+      title: { display: true, text: '反方风险雷达图', color: '#64b5f6' }
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 3,
+        ticks: { color: '#90a4ae', backdropColor: 'transparent' },
+        grid: { color: '#1e3044' },
+        pointLabels: { color: '#90a4ae' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
